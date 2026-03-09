@@ -62,7 +62,7 @@ ros2 launch rov_vision uw_rs_apriltag_triangulation.launch.xml \
 
 | Topic | Type | Description |
 |---|---|---|
-| `/apriltag/corners` | `PolygonStamped` | 4 corners per tag (u, v pixels + Z depth in meters) |
+| `/apriltag/corners` | `PolygonStamped` | 4 corners per tag |
 | `/detection1` | `AprilTagDetectionArray` | left camera detections |
 | `/detection2` | `AprilTagDetectionArray` | right camera detections |
 | `/rov/left/camera_info` | `CameraInfo` | calibrated left camera info |
