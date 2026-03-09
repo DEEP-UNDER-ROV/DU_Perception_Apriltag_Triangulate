@@ -1,0 +1,11 @@
+right_camera_info_publisher:
+  ros__parameters:
+    baseline: 0.09527
+    bf: 40.404198    
+    # 4x4 row-major homogeneous extrinsic [R|t; 0 0 0 1]
+    extrinsic: [
+      1.0, 0.0, 0.0, 0.09527,
+      0.0, 1.0, 0.0, 0.0,
+      0.0, 0.0, 1.0, 0.0,
+      0.0, 0.0, 0.0, 1.0
+    ]

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>jir_image_remapper</name>
+  <version>0.0.0</version>
+  <description>The jir_image_remapper package</description>
+
+  <!-- One maintainer tag required, multiple allowed, one person per tag --> 
+  <!-- Example:  -->
+  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
+   <maintainer email="robotics@jacobs-university.de">Jacobs Robotics</maintainer>
+   <maintainer email="13223071@mahasiswa.itb.ac.id">Yayat Nurhidayat</maintainer>
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>CC BY-NC-ND 4.0</license>
+
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>image_transport</depend>
+  <depend>cv_bridge</depend>
+  <depend>jir_rectification_remap_lib</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

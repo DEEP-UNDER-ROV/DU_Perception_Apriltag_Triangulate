@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>jir_rectification_remap_lib</name>
+  <version>0.1.0</version>
+  <description>Library for applying rectification remap to images</description>
+  <maintainer email="robotics@jacobs-university.de">Jacobs Robotics</maintainer>
+  <maintainer email="yayatnhtedu@gmail.com">Yayat Nurhidayat</maintainer>
+  <license>CC BY-NC-ND 4.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>sensor_msgs</depend>
+  <depend>libopencv-dev</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

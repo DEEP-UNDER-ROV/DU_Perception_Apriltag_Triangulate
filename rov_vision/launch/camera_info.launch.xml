@@ -1,0 +1,31 @@
+<launch>
+
+  <arg name="left_camera_yaml"
+       default="$(find-pkg-share rov_vision)/config/left_camera.yaml"/>
+  <arg name="right_camera_yaml"
+       default="$(find-pkg-share rov_vision)/config/right_camera.yaml"/>
+
+  <node pkg="rov_vision"
+        exec="camera_info_publisher"
+        name="left_camera_info_publisher"
+        output="screen">
+    <param name="camera_info_url" value="file://$(var left_camera_yaml)"/>
+    <param name="camera_name"     value="left_camera"/>
+    <param name="topic"           value="/rov/left/camera_info"/>
+    <param name="frame_id"        value="left_camera_optical_frame"/>
+  </node>
+
+  <node pkg="rov_vision"
+        exec="camera_info_publisher"
+        name="right_camera_info_publisher"
+        output="screen">
+    <param name="camera_info_url"  value="file://$(var right_camera_yaml)"/>
+    <param name="camera_name"      value="right_camera"/>
+    <param name="topic"            value="/rov/right/camera_info"/>
+    <param name="frame_id"         value="right_camera_optical_frame"/>
+    <param name="parent_frame_id"  value="left_camera_optical_frame"/>
+    <param name="baseline"         value="0.09527"/>
+    <param name="bf"               value="40.987654"/>
+  </node>
+
+</launch>

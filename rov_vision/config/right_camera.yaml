@@ -1,0 +1,31 @@
+image_width: 848
+image_height: 480
+camera_name: right_camera
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [424.102, 0.0, 427.677,
+         0.0, 425.608, 240.242,
+         0.0, 0.0, 1.0]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [0.0, 0.0, 0.0, 0.0, 0.0]
+# Rectification: identity (cameras are already rectified — pure X baseline)
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1.0, 0.0, 0.0,
+         0.0, 1.0, 0.0,
+         0.0, 0.0, 1.0]
+# Projection: P[3] = -fx * baseline = -424.102 * 0.09527 = -40.987654
+# P = | fx   0  cx   -fx*tx |
+#     |  0  fy  cy       0  |
+#     |  0   0   1       0  |
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [424.102, 0.0, 427.677, -40.987654,
+         0.0, 425.608, 240.242, 0.0,
+         0.0, 0.0, 1.0, 0.0]

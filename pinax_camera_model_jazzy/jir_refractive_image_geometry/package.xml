@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>jir_refractive_image_geometry</name>
+  <version>0.1.0</version>
+  <description>Header-only library for refractive camera geometry</description>
+  <maintainer email="robotics@jacobs-university.de">Jacobs Robotics</maintainer>
+  <maintainer email="yayatnhtedu@gmail.com">Yayat Nurhidayat</maintainer>
+  <license>CC BY-NC-ND 4.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>eigen3_cmake_module</buildtool_depend>
+  
+  <depend>eigen</depend>
+  <depend>libgsl-dev</depend>
+  <depend>sensor_msgs</depend>
+  <depend>image_geometry</depend>
+  <depend>jir_refractive_image_geometry_msgs</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
