@@ -4,6 +4,8 @@
   <arg name="tag_family"        default="36h11"/>
   <arg name="tag_size"          default="0.1"/>
   <arg name="image_transport"   default="compressed"/>
+  <arg name="left_input"  default="/camera/infra1/image_rect_raw"/>
+  <arg name="right_input" default="/camera/infra2/image_rect_raw"/>
 
   <include file="$(find-pkg-share realsense2_camera)/launch/rs_launch.py">
     <arg name="serial_no"             value="$(var serial_no)"/>
@@ -21,8 +23,8 @@
   <include file="$(find-pkg-share jir_image_remapper)/launch/stereo_remapper.launch.py">
     <arg name="stereo"          value="true"/>
     <arg name="image_transport" value="$(var image_transport)"/>
-    <arg name="left_input"      value="/$(var camera_name)/infra1/image_rect_raw"/>
-    <arg name="right_input"     value="/$(var camera_name)/infra2/image_rect_raw"/>
+    <arg name="left_input"      value="$(var left_input)"/>
+    <arg name="right_input"     value="$(var right_input)"/>
   </include>
 
   <node pkg="rov_vision"
