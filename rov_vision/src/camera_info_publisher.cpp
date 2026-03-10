@@ -3,6 +3,7 @@
 #include <geometry_msgs/msg/transform_stamped.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/camera_info.hpp>
+#include <sensor_msgs/msg/image.hpp>
 #include <tf2/LinearMath/Matrix3x3.h>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2_ros/static_transform_broadcaster.h>
@@ -68,8 +69,6 @@ public:
     auto info = manager_->getCameraInfo();
     const double fx = info.k[0];
     const double fy = info.k[4];
-    const double cx = info.k[2];
-    const double cy = info.k[5];
 
     info.r = R;
     if (tx != 0.0 || ty != 0.0) {
@@ -84,16 +83,16 @@ public:
                 "  Intrinsics: fx=%.3f  fy=%.3f  cx=%.3f  cy=%.3f\n"
                 "  Extrinsic t=[%.5f, %.5f, %.5f]\n"
                 "  P[3]=%.6f (Tx)  P[7]=%.6f (Ty)  bf=%.6f  baseline=%.5fm",
-                fx, fy, cx, cy, tx, ty, tz, info.p[3], info.p[7], bf, baseline);
+                fx, info.k[4], info.k[2], info.k[5], tx, ty, tz, info.p[3],
+                info.p[7], bf, baseline);
 
     pub_ = this->create_publisher<sensor_msgs::msg::CameraInfo>(topic, 10);
 
-    // Subscribe to corrected camera_info just for timestamp sync
     if (!sync_topic.empty()) {
-      RCLCPP_INFO(this->get_logger(), "Syncing timestamps from: %s",
+      RCLCPP_INFO(this->get_logger(), "Syncing timestamps from image: %s",
                   sync_topic.c_str());
-      sync_sub_ = this->create_subscription<sensor_msgs::msg::CameraInfo>(
-          sync_topic, 10, [this](const sensor_msgs::msg::CameraInfo &msg) {
+      sync_sub_ = this->create_subscription<sensor_msgs::msg::Image>(
+          sync_topic, 10, [this](const sensor_msgs::msg::Image &msg) {
             calibrated_info_.header.stamp = msg.header.stamp;
             calibrated_info_.header.frame_id = frame_id_;
             pub_->publish(calibrated_info_);
@@ -147,7 +146,7 @@ private:
   }
 
   rclcpp::Publisher<sensor_msgs::msg::CameraInfo>::SharedPtr pub_;
-  rclcpp::Subscription<sensor_msgs::msg::CameraInfo>::SharedPtr sync_sub_;
+  rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr sync_sub_;
   rclcpp::TimerBase::SharedPtr timer_;
   std::shared_ptr<camera_info_manager::CameraInfoManager> manager_;
   std::shared_ptr<tf2_ros::StaticTransformBroadcaster> tf_broadcaster_;

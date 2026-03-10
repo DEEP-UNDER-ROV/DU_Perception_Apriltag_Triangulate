@@ -4,20 +4,18 @@
   <arg name="tag_family"        default="36h11"/>
   <arg name="tag_size"          default="0.1"/>
   <arg name="image_transport"   default="compressed"/>
-  <arg name="left_input"  default="/camera/infra1/image_rect_raw"/>
-  <arg name="right_input" default="/camera/infra2/image_rect_raw"/>
+  <arg name="left_input"        default="/camera/camera/infra1/image_rect_raw"/>
+  <arg name="right_input"       default="/camera/camera/infra2/image_rect_raw"/>
 
   <include file="$(find-pkg-share realsense2_camera)/launch/rs_launch.py">
-    <arg name="serial_no"             value="$(var serial_no)"/>
-    <arg name="camera_name"           value="$(var camera_name)"/>
-    <arg name="enable_infra1"         value="true"/>
-    <arg name="enable_infra2"         value="true"/>
-    <arg name="enable_color"          value="false"/>
-    <arg name="enable_depth"          value="false"/>
-    <arg name="infra_fps"             value="30"/>
-    <arg name="infra_width"           value="848"/>
-    <arg name="infra_height"          value="480"/>
-    <arg name="enable_sync"           value="true"/>
+    <arg name="serial_no"                  value="$(var serial_no)"/>
+    <arg name="camera_name"                value="$(var camera_name)"/>
+    <arg name="enable_infra1"              value="true"/>
+    <arg name="enable_infra2"              value="true"/>
+    <arg name="enable_color"               value="false"/>
+    <arg name="enable_depth"               value="false"/>
+    <arg name="enable_sync"                value="true"/>
+    <arg name="depth_module.infra_profile" value="848x480x30"/>
   </include>
 
   <include file="$(find-pkg-share jir_image_remapper)/launch/stereo_remapper.launch.py">
@@ -36,7 +34,7 @@
     <param name="camera_name"  value="left_camera"/>
     <param name="topic"        value="/rov/left/camera_info"/>
     <param name="frame_id"     value="left_camera_optical_frame"/>
-    <param name="sync_topic"   value="/corrected/left/camera_info"/>
+    <param name="sync_topic"   value="/corrected/left/image_raw"/>
   </node>
 
   <node pkg="rov_vision"
@@ -49,7 +47,7 @@
     <param name="topic"            value="/rov/right/camera_info"/>
     <param name="frame_id"         value="right_camera_optical_frame"/>
     <param name="parent_frame_id"  value="left_camera_optical_frame"/>
-    <param name="sync_topic"       value="/corrected/right/camera_info"/>
+    <param name="sync_topic"       value="/corrected/right/image_raw"/>
     <param from="$(find-pkg-share rov_vision)/config/stereo_params.yaml"/>
   </node>
 
@@ -59,9 +57,9 @@
         output="screen">
     <param name="family" value="$(var tag_family)"/>
     <param name="size"   value="$(var tag_size)"/>
-    <remap from="image_rect"                    to="/corrected/left/image_raw"/>
-    <remap from="/corrected/left/camera_info"   to="/rov/left/camera_info"/>
-    <remap from="detections"                    to="/detection1"/>
+    <remap from="image_rect"                   to="/corrected/left/image_raw"/>
+    <remap from="/corrected/left/camera_info"  to="/rov/left/camera_info"/>
+    <remap from="detections"                   to="/detection1"/>
   </node>
 
   <node pkg="apriltag_ros"
@@ -70,9 +68,9 @@
         output="screen">
     <param name="family" value="$(var tag_family)"/>
     <param name="size"   value="$(var tag_size)"/>
-    <remap from="image_rect"                    to="/corrected/right/image_raw"/>
-    <remap from="/corrected/right/camera_info"  to="/rov/right/camera_info"/>
-    <remap from="detections"                    to="/detection2"/>
+    <remap from="image_rect"                   to="/corrected/right/image_raw"/>
+    <remap from="/corrected/right/camera_info" to="/rov/right/camera_info"/>
+    <remap from="detections"                   to="/detection2"/>
   </node>
 
   <node pkg="rov_vision"
