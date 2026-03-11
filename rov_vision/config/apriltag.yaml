@@ -1,0 +1,23 @@
+apriltag_node_left:
+  ros__parameters:
+    family: 36h11
+    size: 0.2065
+    max_hamming: 2
+    detector:
+      threads: 1
+      decimate: 1.0
+      blur: 0.5
+      refine: true
+      sharpening: 0.25
+
+apriltag_node_right:
+  ros__parameters:
+    family: 36h11
+    size: 0.2065
+    max_hamming: 2
+    detector:
+      threads: 1
+      decimate: 1.0
+      blur: 0.5
+      refine: true
+      sharpening: 0.25

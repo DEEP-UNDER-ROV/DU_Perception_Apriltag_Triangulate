@@ -51,26 +51,18 @@
     <param from="$(find-pkg-share rov_vision)/config/stereo_params.yaml"/>
   </node>
 
-  <node pkg="apriltag_ros"
-        exec="apriltag_node"
-        name="apriltag_node_left"
-        output="screen">
-    <param name="family" value="$(var tag_family)"/>
-    <param name="size"   value="$(var tag_size)"/>
-    <remap from="image_rect"                   to="/corrected/left/image_raw"/>
-    <remap from="/corrected/left/camera_info"  to="/rov/left/camera_info"/>
-    <remap from="detections"                   to="/detection1"/>
+<node pkg="apriltag_ros" exec="apriltag_node" name="apriltag_node_left" output="screen">
+    <param from="$(find-pkg-share rov_vision)/config/apriltag.yaml"/>
+    <remap from="image_rect"                  to="/corrected/left/image_raw"/>
+    <remap from="camera_info"                 to="/rov/left/camera_info"/>
+    <remap from="detections"                  to="/detection1"/>
   </node>
 
-  <node pkg="apriltag_ros"
-        exec="apriltag_node"
-        name="apriltag_node_right"
-        output="screen">
-    <param name="family" value="$(var tag_family)"/>
-    <param name="size"   value="$(var tag_size)"/>
-    <remap from="image_rect"                   to="/corrected/right/image_raw"/>
-    <remap from="/corrected/right/camera_info" to="/rov/right/camera_info"/>
-    <remap from="detections"                   to="/detection2"/>
+  <node pkg="apriltag_ros" exec="apriltag_node" name="apriltag_node_right" output="screen">
+    <param from="$(find-pkg-share rov_vision)/config/apriltag.yaml"/>
+    <remap from="image_rect"                  to="/corrected/right/image_raw"/>
+    <remap from="camera_info"                 to="/rov/right/camera_info"/>
+    <remap from="detections"                  to="/detection2"/>
   </node>
 
   <node pkg="rov_vision"
