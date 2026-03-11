@@ -16,6 +16,7 @@
     <arg name="enable_depth"               value="false"/>
     <arg name="enable_sync"                value="true"/>
     <arg name="depth_module.infra_profile" value="848x480x30"/>
+    <arg name="depth_module.emitter_enabled" value="0"/>
   </include>
 
   <include file="$(find-pkg-share jir_image_remapper)/launch/stereo_remapper.launch.py">
