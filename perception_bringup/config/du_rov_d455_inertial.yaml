@@ -1,0 +1,107 @@
+%YAML:1.0
+#--------------------------------------------------------------------------------------------
+# LEGACY-FORMAT config (flat Camera.fx / Tlr / Tbc keys) — for the actual installed
+# orbslam3 build, which uses the old parameter parser regardless of stereo vs
+# stereo-inertial executable.
+#
+# *** IMPORTANT CAVEAT ***
+# Camera.fx/fy/cx/cy/Camera.bf below assume /corrected/left,right/image_raw were
+# rectified via a standard cv::stereoRectify (alpha=-1) using THIS Kalibr calibration.
+# If your rectification pipeline used different parameters (different alpha, a
+# different calibration, or e.g. stereo_image_proc with its own camera_info),
+# these numbers will be wrong even though the file loads without error — SLAM
+# will just silently track with the wrong scale/geometry. Verify against
+# `ros2 topic echo /corrected/left/camera_info --once` (compare the P matrix
+# fx/cx/cy to Camera.fx/cx/cy below, and P[0,3] of the right camera_info to
+# -Camera.bf) before trusting this for real use.
+#--------------------------------------------------------------------------------------------
+Camera.type: "PinHole"
+
+# Rectified left camera intrinsics (computed via cv::stereoRectify, alpha=0)
+Camera.fx: 430.793086
+Camera.fy: 430.793086
+Camera.cx: 414.830803
+Camera.cy: 244.104872
+Camera.k1: 0.0
+Camera.k2: 0.0
+Camera.p1: 0.0
+Camera.p2: 0.0
+
+# Rectified right camera intrinsics (same fx/fy/cx/cy as left after standard rectification)
+Camera2.fx: 430.793086
+Camera2.fy: 430.793086
+Camera2.cx: 414.830803
+Camera2.cy: 244.104872
+Camera2.k1: 0.0
+Camera2.k2: 0.0
+Camera2.p1: 0.0
+Camera2.p2: 0.0
+
+# Transform of right camera frame into left camera frame (post-rectification, pure x-translation)
+Tlr: !!opencv-matrix
+  rows: 3
+  cols: 4
+  dt: f
+  data: [1.0, 0.0, 0.0, 0.09638894907585159,
+         0.0, 1.0, 0.0, 0.0,
+         0.0, 0.0, 1.0, 0.0]
+
+Camera.width: 848
+Camera.height: 480
+# ASSUMED — set to your actual /corrected/ stream rate
+Camera.fps: 30
+
+Camera.RGB: 0
+
+# baseline * fx (rectified)
+Camera.bf: 41.523693
+
+# Close/Far threshold, in multiples of the stereo baseline
+ThDepth: 30.0
+
+# Transform from left camera to IMU/body frame (inverse of Kalibr's cam0.T_cam_imu)
+Tbc: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [ 0.9999226585711166,  0.00466817865813347, 0.011527574943863, -0.02391157258421995,
+         -0.00464710947280396, 0.9999874837644643,  -0.00185383061890948, 0.01924342819651455,
+         -0.01153608467455083, 0.00180011733828042, 0.999931836840867,   0.02785369019666022,
+          0.0, 0.0, 0.0, 1.0]
+
+# Do not insert KFs when recently lost
+InsertKFsWhenLost: 0
+
+# IMU noise — from your Kalibr results file (continuous-time values)
+IMU.NoiseGyro: 0.0002454543525191613
+IMU.NoiseAcc: 0.0011126274423096409
+IMU.GyroWalk: 4.076264572369842e-06
+IMU.AccWalk: 0.00035949400613806615
+IMU.Frequency: 200
+IMU.fastInit: 1
+
+#--------------------------------------------------------------------------------------------
+# ORB Parameters
+#--------------------------------------------------------------------------------------------
+ORBextractor.nFeatures: 2500
+ORBextractor.scaleFactor: 1.32
+ORBextractor.nLevels: 10
+ORBextractor.iniThFAST: 15
+ORBextractor.minThFAST: 7
+
+#--------------------------------------------------------------------------------------------
+# Viewer Parameters
+#--------------------------------------------------------------------------------------------
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3
+Viewer.ViewpointX: 0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -3.5
+Viewer.ViewpointF: 500
+
+Camera1.maskPath: "/home/takapad/distrobox/ubuntu24/Project/ROV_ws/src/rov_perception/perception_bringup/mask/mask_left.png"
+Camera2.maskPath: "/home/takapad/distrobox/ubuntu24/Project/ROV_ws/src/rov_perception/perception_bringup/mask/mask_right.png"

@@ -1,0 +1,23 @@
+<launch>
+  <arg name="vocab_path"
+       default="$(find-pkg-share rov_slam)/vocabulary/ORBvoc.txt"
+       description="Path to ORBvoc.txt"/>
+  <arg name="settings_path"
+       default="$(find-pkg-share perception_bringup)/config/du_rov_d455.yaml"
+       description="Path to ORB-SLAM3 stereo settings yaml"/>
+  <arg name="do_rectify" default="false"/>
+  <arg name="use_viewer" default="true"/>
+  <arg name="left_image_topic" default="/corrected/left/image_raw"/>
+  <arg name="right_image_topic" default="/corrected/right/image_raw"/>
+  <arg name="use_rviz" default="true"/>
+
+  <node pkg="rov_slam" exec="stereo" name="orbslam3_stereo" output="screen"
+        args="$(var vocab_path) $(var settings_path) $(var do_rectify) $(var use_viewer)">
+    <remap from="camera/left" to="$(var left_image_topic)"/>
+    <remap from="camera/right" to="$(var right_image_topic)"/>
+  </node>
+
+  <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen"
+        args="-d $(find-pkg-share perception_bringup)/rviz/orbslam.rviz"
+        if="$(var use_rviz)"/>
+</launch>

@@ -13,10 +13,26 @@ find_package(geometry_msgs REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(camera_info_manager REQUIRED)
 find_package(apriltag_msgs REQUIRED)
+find_package(visualization_msgs REQUIRED)
 find_package(message_filters REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
+
+find_package(cv_bridge REQUIRED)
+find_package(OpenCV REQUIRED COMPONENTS core imgproc ximgproc)
+
+include_directories(include)
+
+add_executable(tag_velocity_estimator src/tag_velocity_estimator.cpp)
+ament_target_dependencies(tag_velocity_estimator
+  rclcpp
+  geometry_msgs
+  visualization_msgs
+  Eigen3
+)
+target_include_directories(
+  tag_velocity_estimator PUBLIC include)
 
 add_executable(camera_info_publisher src/camera_info_publisher.cpp)
 ament_target_dependencies(camera_info_publisher
@@ -37,11 +53,11 @@ ament_target_dependencies(stereo_triangulator
   sensor_msgs
   message_filters
 )
-
 target_include_directories(
   stereo_triangulator PUBLIC include)
 
-install(TARGETS camera_info_publisher stereo_triangulator
+
+install(TARGETS camera_info_publisher stereo_triangulator tag_velocity_estimator
   DESTINATION lib/${PROJECT_NAME}
 )
 

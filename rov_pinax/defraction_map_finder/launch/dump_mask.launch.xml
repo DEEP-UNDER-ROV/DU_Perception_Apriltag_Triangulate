@@ -1,0 +1,9 @@
+<launch>
+  <arg name="config_path" default="$(find-pkg-share defraction_map_finder)/config/infra1_config.yaml"
+       description="path to pinax camera config yaml"/>
+  <arg name="output_mask_path" default="$(find-pkg-share defraction_map_finder)/mask/infra1_mask.png"
+       description="path to write the generated pinax mask png"/>
+
+  <node pkg="defraction_map_finder" exec="dump_mask" name="dump_mask" output="screen"
+        args="$(var config_path) $(var output_mask_path)"/>
+</launch>
