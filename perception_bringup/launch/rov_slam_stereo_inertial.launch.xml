@@ -2,11 +2,11 @@
   <arg name="vocab_path"
        default="$(find-pkg-share rov_slam)/vocabulary/ORBvoc.txt"
        description="Path to ORBvoc.txt"/>
-       
+
   <arg name="settings_file"
        default="du_rov_d455_inertial.yaml"
-       description="Name of the ORB-SLAM3 settings yaml (must be inside perception_bringup/config/)"/>
-       
+       description="Settings file in perception_bringup/config (ignored when use_sim is true)"/>
+
   <arg name="do_rectify" default="false"/>
   <arg name="do_equalization" default="false"/>
   <arg name="use_viewer" default="true"/>
@@ -14,14 +14,21 @@
   <arg name="right_image_topic" default="/corrected/right/image_raw"/>
   <arg name="imu_topic" default="/camera/imu"/>
   <arg name="use_rviz" default="true"/>
+  <arg name="use_sim" default="false"/>
   <arg name="enable_logging" default="false" description="Enable SLAM Evaluator logging to /tmp/slam_eval"/>
+  <arg name="enable_velocity" default="false" description="Enable SLAM velocity"/>
+
+  <let name="settings_resolved"
+       value="$(eval '&quot;d455_sim.yaml&quot; if &quot;$(var use_sim)&quot; == &quot;true&quot; else &quot;$(var settings_file)&quot;')"/>
 
   <node pkg="rov_slam" exec="stereo-inertial" name="orbslam3_stereo" output="screen"
-        args="$(var vocab_path) $(find-pkg-share perception_bringup)/config/$(var settings_file) $(var do_rectify) $(var do_equalization) $(var use_viewer)">
+        args="$(var vocab_path) $(find-pkg-share perception_bringup)/config/$(var settings_resolved) $(var do_rectify) $(var do_equalization) $(var use_viewer)">
     <remap from="camera/left" to="$(var left_image_topic)"/>
     <remap from="camera/right" to="$(var right_image_topic)"/>
     <remap from="imu" to="$(var imu_topic)"/>
     <param name="enable_logging" value="$(var enable_logging)"/>
+    <param name="enable_velocity" value="$(var enable_velocity)"/>
+    <param name="use_sim_time" value="$(var use_sim)"/>
   </node>
 
   <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen"
