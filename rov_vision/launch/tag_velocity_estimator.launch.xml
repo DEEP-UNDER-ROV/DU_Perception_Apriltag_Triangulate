@@ -1,0 +1,8 @@
+<launch>
+  <node pkg="rov_vision"
+        exec="tag_velocity_estimator"
+        output="screen">
+    <param from="$(find-pkg-share rov_vision)/config/tag_velocity_estimator.yaml"/>
+  </node>
+
+</launch>

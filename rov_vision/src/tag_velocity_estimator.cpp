@@ -4,10 +4,8 @@ namespace rov_vision {
 
 VelocityEstimator::VelocityEstimator() : Node("velocity_estimator_node") {
   this->declare_parameter<std::string>("corners_topic", "/apriltag/corners");
-  this->declare_parameter<std::string>("velocity_topic",
-                                       "/rov_vision/camera_velocity");
-  this->declare_parameter<std::string>("marker_topic",
-                                       "/rov_vision/velocity_marker");
+  this->declare_parameter<std::string>("velocity_topic", "camera_velocity");
+  this->declare_parameter<std::string>("marker_topic", "velocity_marker");
   this->declare_parameter<double>("min_dt", 1e-3);
   this->declare_parameter<double>("max_dt", 0.5);
   this->declare_parameter<double>("marker_scale", 1.0);
@@ -29,11 +27,7 @@ VelocityEstimator::VelocityEstimator() : Node("velocity_estimator_node") {
   marker_pub_ =
       this->create_publisher<visualization_msgs::msg::Marker>(marker_topic, 10);
 
-  RCLCPP_INFO(this->get_logger(),
-              "VelocityEstimator started\n"
-              "  corners in  <- %s\n"
-              "  twist out   -> %s\n"
-              "  marker out  -> %s",
+  RCLCPP_INFO(this->get_logger(), "VelocityEstimator started\n",
               corners_topic.c_str(), velocity_topic.c_str(),
               marker_topic.c_str());
 }
@@ -147,10 +141,9 @@ void VelocityEstimator::publishMarker(const geometry_msgs::msg::Point &origin,
   marker.points.push_back(origin);
   marker.points.push_back(tip);
 
-  marker.scale.x = 0.02;  // shaft diameter
-  marker.scale.y = 0.04;  // head diameter
-  marker.scale.z = 0.0;   // auto head length
-
+  marker.scale.x = 0.02;
+  marker.scale.y = 0.04;
+  marker.scale.z = 0.0;
   marker.color.r = 1.0f;
   marker.color.g = 0.2f;
   marker.color.b = 0.2f;

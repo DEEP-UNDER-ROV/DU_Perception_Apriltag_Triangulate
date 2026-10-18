@@ -1,0 +1,5 @@
+velocity_estimator_node:
+  ros__parameters:
+    corners_topic: "/apriltag/corners"
+    velocity_topic: "camera_velocity"
+    marker_topic: "velocity_marker"

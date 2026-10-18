@@ -4,20 +4,10 @@
   <arg name="tag_family"        default="36h11"/>
   <arg name="tag_size"          default="0.1"/>
   <arg name="image_transport"   default="compressed"/>
-  <arg name="left_input"        default="/camera/camera/infra1/image_rect_raw"/>
-  <arg name="right_input"       default="/camera/camera/infra2/image_rect_raw"/>
+  <arg name="left_input"        default="/camera/infra1/image_rect_raw"/>
+  <arg name="right_input"       default="/camera/infra2/image_rect_raw"/>
 
-  <include file="$(find-pkg-share realsense2_camera)/launch/rs_launch.py">
-    <arg name="serial_no"                  value="$(var serial_no)"/>
-    <arg name="camera_name"                value="$(var camera_name)"/>
-    <arg name="enable_infra1"              value="true"/>
-    <arg name="enable_infra2"              value="true"/>
-    <arg name="enable_color"               value="false"/>
-    <arg name="enable_depth"               value="false"/>
-    <arg name="enable_sync"                value="true"/>
-    <arg name="depth_module.infra_profile" value="848x480x30"/>
-    <arg name="depth_module.emitter_enabled" value="0"/>
-  </include>
+  <include file="$(find-pkg-share rov_vision)/launch/rs_cam.launch.py" />
 
   <include file="$(find-pkg-share jir_image_remapper)/launch/stereo_remapper.launch.py">
     <arg name="stereo"          value="true"/>
