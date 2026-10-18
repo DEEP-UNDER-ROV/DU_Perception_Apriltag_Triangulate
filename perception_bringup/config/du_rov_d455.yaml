@@ -1,12 +1,6 @@
 %YAML:1.0
-
-#--------------------------------------------------------------------------------------------
-# Camera Parameters. Adjust them!
-#--------------------------------------------------------------------------------------------
 File.version: "1.0"
 
-# Camera Type: PinHole (Because distortion is already removed!)
-# Camera.type: "PinHole"
 Camera.type: "PinHole"
 
 # Left image ROI (crop out warped edges)
@@ -52,27 +46,16 @@ Camera.height: 480
 # Camera frames per second 
 Camera.fps: 30
 
-# Color order (0: BGR, 1: RGB, 2: Gray). 
-# Your infra cameras are usually Gray (2) or Mono8, but ORB-SLAM often expects RGB/BGR setting.
-# If images are grayscale, use 1 (RGB) as it treats all channels same.
 Camera.RGB: 2
 
-#--------------------------------------------------------------------------------------------
-# Stereo Parameters
-#--------------------------------------------------------------------------------------------
 Stereo.ThDepth: 40.0
 
-# bf = baseline * fx = 40.987654 (directly from -P[0,3] of right camera)
 Stereo.bf: 40.987654
 
-# Stereo extrinsics (rectified: pure horizontal translation)
-# baseline = 0.09527m
 Stereo.ThDepth: 40.0
 
-# baseline (0.09668587) * Left fx (424.46058097)
 Stereo.bf: 41.03932204
 
-# Fully unrolled, inverted Kalibr Extrinsic Transformation Matrix (Right-to-Left)
 Stereo.T_c1_c2: !!opencv-matrix
    rows: 4
    cols: 4
@@ -89,9 +72,6 @@ ORBextractor.nLevels: 9
 ORBextractor.iniThFAST: 8
 ORBextractor.minThFAST: 4
 
-#--------------------------------------------------------------------------------------------
-# Viewer Parameters
-#--------------------------------------------------------------------------------------------
 Viewer.KeyFrameSize: 0.05
 Viewer.KeyFrameLineWidth: 1.0
 Viewer.GraphLineWidth: 0.9

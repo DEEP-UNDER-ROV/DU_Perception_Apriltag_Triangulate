@@ -2,7 +2,7 @@
 
 Camera.type: "PinHole"
 
-# Raw left camera intrinsics (cam0 from Kalibr)
+# Raw left camera intrinsics
 Camera.fx: 421.2484918568618
 Camera.fy: 425.32377413578274
 Camera.cx: 426.6624017831985
@@ -12,7 +12,7 @@ Camera.k2: -0.007946273943527465
 Camera.p1: 0.0004453991646285745
 Camera.p2: 0.002500590208432077
 
-# Raw right camera intrinsics (cam1 from Kalibr)
+# Raw right camera intrinsics 
 Camera2.fx: 421.0339864732036
 Camera2.fy: 424.93951095134787
 Camera2.cx: 425.6478066896418
@@ -22,8 +22,6 @@ Camera2.k2: -0.007993436879145492
 Camera2.p1: 0.0004931438713168827
 Camera2.p2: 0.0018001416962802471
 
-# Transform of right camera frame into left camera frame (T_cam0_cam1)
-# Note: Kalibr outputs T_cam1_cam0. This is the calculated mathematical inverse.
 Tlr: !!opencv-matrix
   rows: 3
   cols: 4
@@ -34,18 +32,14 @@ Tlr: !!opencv-matrix
 
 Camera.width: 848
 Camera.height: 480
-# ASSUMED — set to your actual /corrected/ stream rate
 Camera.fps: 30
 
 Camera.RGB: 0
 
-# baseline * fx (baseline norm: 0.096388949 * cam0 fx: 421.24849)
 Camera.bf: 40.603698
 
-# Close/Far threshold, in multiples of the stereo baseline
 ThDepth: 30.0
 
-# Transform from left camera to IMU/body frame (Kalibr's T_ic for cam0)
 Tbc: !!opencv-matrix
   rows: 4
   cols: 4
@@ -55,10 +49,8 @@ Tbc: !!opencv-matrix
          -0.01153608,  0.00180012,  0.99993184,  0.02785369,
           0.0,         0.0,         0.0,         1.0]
 
-# Do not insert KFs when recently lost
 InsertKFsWhenLost: 0
 
-# IMU noise — from your Kalibr results file (continuous-time values)
 IMU.NoiseGyro: 0.0002454543525191613
 IMU.NoiseAcc: 0.0011126274423096409
 IMU.GyroWalk: 4.076264572369842e-06
@@ -66,18 +58,12 @@ IMU.AccWalk: 0.00035949400613806615
 IMU.Frequency: 200
 IMU.fastInit: 1
 
-#--------------------------------------------------------------------------------------------
-# ORB Parameters
-#--------------------------------------------------------------------------------------------
 ORBextractor.nFeatures: 2500
 ORBextractor.scaleFactor: 1.32
 ORBextractor.nLevels: 10
 ORBextractor.iniThFAST: 15
 ORBextractor.minThFAST: 7
 
-#--------------------------------------------------------------------------------------------
-# Viewer Parameters
-#--------------------------------------------------------------------------------------------
 Viewer.KeyFrameSize: 0.05
 Viewer.KeyFrameLineWidth: 1
 Viewer.GraphLineWidth: 0.9

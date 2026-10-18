@@ -1,29 +1,19 @@
 %YAML:1.0
-#--------------------------------------------------------------------------------------------
-# Kalibr IN-AIR Stereo-Inertial Configuration for ORB-SLAM3
-# Fully Rectified via ROS 2 Node (do_rectify:=true)
-#--------------------------------------------------------------------------------------------
 
 Camera.type: "PinHole"
 
-# -----------------------------------------------------------------------------
-# RECTIFIED INTRINSICS (Applied to ORB-SLAM3 Core)
-# -----------------------------------------------------------------------------
 Camera.fx: 430.793082
 Camera.fy: 430.793082
 Camera.cx: 414.830807
 Camera.cy: 244.104876
 
-# Images are pre-undistorted by the ROS 2 node, so SLAM assumes 0 distortion
 Camera.k1: 0.0
 Camera.k2: 0.0
 Camera.p1: 0.0
 Camera.p2: 0.0
 
-# baseline * fx (41.523693 / 430.793082 = ~0.0963m physical baseline)
 Camera.bf: 41.523693
 
-# Transform of right camera frame into left camera frame (Post-rectification pure translation)
 Tlr: !!opencv-matrix
   rows: 3
   cols: 4
@@ -37,10 +27,8 @@ Camera.height: 480
 Camera.fps: 30
 Camera.RGB: 0
 
-# Close/Far threshold, in multiples of the stereo baseline
 ThDepth: 30.0
 
-# Transform from left camera to IMU/body frame (Kalibr's cam0 T_ic)
 Tbc: !!opencv-matrix
   rows: 4
   cols: 4
@@ -50,9 +38,6 @@ Tbc: !!opencv-matrix
          -0.01153608,  0.00180012,  0.99993184,  0.02785369,
           0.0,         0.0,         0.0,         1.0]
 
-# -----------------------------------------------------------------------------
-# IMU CONFIGURATION
-# -----------------------------------------------------------------------------
 InsertKFsWhenLost: 0
 
 # From Kalibr IMU Configuration block
@@ -63,18 +48,12 @@ IMU.AccWalk: 0.00035949400613806615
 IMU.Frequency: 200
 IMU.fastInit: 1
 
-# -----------------------------------------------------------------------------
-# ORB PARAMETERS (Optimized for Real-Time)
-# -----------------------------------------------------------------------------
 ORBextractor.nFeatures: 2500
 ORBextractor.scaleFactor: 1.32
 ORBextractor.nLevels: 10
 ORBextractor.iniThFAST: 15
 ORBextractor.minThFAST: 7
 
-# -----------------------------------------------------------------------------
-# VIEWER PARAMETERS
-# -----------------------------------------------------------------------------
 Viewer.KeyFrameSize: 0.05
 Viewer.KeyFrameLineWidth: 1
 Viewer.GraphLineWidth: 0.9
@@ -89,9 +68,6 @@ Viewer.ViewpointF: 500
 Camera1.maskPath: "/home/takapad/distrobox/ubuntu24/Project/ROV_ws/src/rov_perception/perception_bringup/mask/mask_left.png"
 Camera2.maskPath: "/home/takapad/distrobox/ubuntu24/Project/ROV_ws/src/rov_perception/perception_bringup/mask/mask_right.png"
 
-# =============================================================================
-# IN-NODE RECTIFICATION MATRICES (Read by stereo-inertial-node.cpp)
-# =============================================================================
 LEFT.height: 480
 LEFT.width: 848
 RIGHT.height: 480
