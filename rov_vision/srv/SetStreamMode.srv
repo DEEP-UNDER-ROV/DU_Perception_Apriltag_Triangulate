@@ -1,0 +1,14 @@
+# Select what the visualizer streams.
+uint8 COLOR=0       # colour image only
+uint8 DEPTH=1       # colour-coded depth image with legend
+uint8 ALTERNATE=2   # alternate between colour and depth
+
+uint8 mode
+
+# Only used by ALTERNATE (but may be sent with any mode to update them).
+# Seconds to show each image per cycle. A value <= 0 keeps the current setting.
+float32 color_duration
+float32 depth_duration
+---
+bool success
+string message

@@ -20,8 +20,8 @@ find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 
 find_package(cv_bridge REQUIRED)
-find_package(OpenCV REQUIRED COMPONENTS core imgproc ximgproc)
-
+find_package(OpenCV REQUIRED COMPONENTS core imgproc ximgproc calib3d videoio)
+find_package(rosidl_default_generators REQUIRED)
 include_directories(include)
 
 add_executable(tag_velocity_estimator src/tag_velocity_estimator.cpp)
@@ -57,13 +57,25 @@ target_include_directories(
   stereo_triangulator PUBLIC include)
 
 
-install(TARGETS camera_info_publisher stereo_triangulator tag_velocity_estimator
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "srv/SetStreamMode.srv"
+)
+rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} "rosidl_typesupport_cpp")
+
+add_executable(visualizer src/visualizer.cpp)
+ament_target_dependencies(visualizer rclcpp sensor_msgs cv_bridge)
+target_include_directories(visualizer PRIVATE ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(visualizer ${cpp_typesupport_target} ${OpenCV_LIBS})
+
+install(TARGETS camera_info_publisher stereo_triangulator tag_velocity_estimator visualizer
   DESTINATION lib/${PROJECT_NAME}
 )
 
 install(DIRECTORY launch config include
   DESTINATION share/${PROJECT_NAME}
 )
+
+ament_export_dependencies(rosidl_default_runtime)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
